@@ -20,13 +20,13 @@ public:
 			return { true, 3, 0 };
 		}
 
-		int numStrikes = 0;
-		for (int i = 0; i < 3; ++i) {
-			if (guessNumber[i] == question[i])
-				++numStrikes;
-		}
+		return { false, getStrikeCount(guessNumber), getBallCount(guessNumber) };
+	}
 
+	int getBallCount(const std::string& guessNumber)
+	{
 		int numBalls = 0;
+
 		for (int i = 0; i < 3; ++i) {
 			for (int j = i + 1; j < i + 3; ++j) {
 				if (guessNumber[i] == question[j % 3])
@@ -34,7 +34,19 @@ public:
 			}
 		}
 
-		return { false, numStrikes, numBalls };
+		return numBalls;
+	}
+
+	int getStrikeCount(const std::string& guessNumber)
+	{
+		int numStrikes = 0;
+
+		for (int i = 0; i < 3; ++i) {
+			if (guessNumber[i] == question[i])
+				++numStrikes;
+		}
+
+		return numStrikes;
 	}
 
 	void assertIllegalArgument(const std::string& guessNumber)
